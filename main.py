@@ -2,7 +2,7 @@ class Solve():
     def __init__(self, grid):
         self.grid = grid
 
-    def printsol(self):
+    def printSol(self):
         hsep1 = " _____ _____ _____ "
         hsep2 = "|     |     |     |"
         hsep3 = "|  {}  |  {}  |  {}  |"
@@ -21,6 +21,45 @@ class Solve():
         gr = [y for x in self.grid for y in x]
         print(glayout.format(*gr))
 
+    def isValid(self, x, y, num):
+        def isValidRow():
+            '''
+            Tested OK
+            '''
+            if num in self.grid[x][:]:
+                return False
+            return True
+        
+        def isValidCol():
+            '''
+            Tested OK
+            '''
+            if num in [x[y] for x in self.grid]:
+                return False
+            return True
+
+        def isValidBlock():
+            '''
+            Tested OK
+            '''
+            rlb = 3*(x//3)
+            rub = rlb+3
+            clb = 3*(y//3)
+            cub = clb+3
+
+            li = []
+            [li.extend(x[clb:cub]) for x in self.grid[rlb:rub]]
+
+            if num in li:
+                return False
+            return True
+
+        if isValidBlock() and isValidCol() and isValidRow():
+            return True
+        else:
+            return False
+
+
 if __name__ == "__main__":
     grid = [
         [0,0,0,9,0,4,6,0,0],
@@ -33,4 +72,6 @@ if __name__ == "__main__":
         [1,8,5,4,2,9,0,6,0],
         [3,7,0,0,0,0,0,2,0]
         ]
-    ss.printsol()
+    ss = Solve(grid)
+    ss.printSol()
+    print(ss.isValid(0,0,5))
