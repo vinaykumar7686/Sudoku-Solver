@@ -59,6 +59,18 @@ class Solve():
         else:
             return False
 
+    def solve(self):
+        for i in range(0,9):
+            for j in range(0,9):
+                if self.grid[i][j] == 0:
+                    for k in range(1,10):
+                        if self.isValid(i, j, k):
+                            self.grid[i][j] = k
+                            self.solve()
+                            self.grid[i][j] = 0
+                    return
+
+        self.printSol()
 
 if __name__ == "__main__":
     grid = [
@@ -73,5 +85,5 @@ if __name__ == "__main__":
         [3,7,0,0,0,0,0,2,0]
         ]
     ss = Solve(grid)
-    ss.printSol()
-    print(ss.isValid(0,0,5))
+    print(ss.solve())
+
